@@ -1,0 +1,38 @@
+name: Generate morning news
+
+on:
+  schedule:
+    # 毎朝6:30 JST = 21:30 UTC（前日）
+    - cron: "30 21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate index.html
+        run: python news.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/index.html
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Update morning news ($(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M JST'))"
+            git push
+          fi
