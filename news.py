@@ -130,45 +130,46 @@ def build_html(articles_by_cat: dict) -> str:
       background: #ffffff;
       color: #1a1a1a;
       font-family: -apple-system, "Helvetica Neue", "Hiragino Sans", sans-serif;
-      line-height: 1.6;
-      padding: 16px;
+      font-size: 18px;
+      line-height: 1.65;
+      padding: 18px;
     }}
     header {{
       border-bottom: 1px solid #1a1a1a;
-      padding-bottom: 12px;
-      margin-bottom: 24px;
+      padding-bottom: 14px;
+      margin-bottom: 28px;
     }}
     header h1 {{
-      font-size: 1.1rem;
+      font-size: 1.4rem;
       font-weight: 600;
       letter-spacing: 0.05em;
     }}
     header .meta {{
-      font-size: 0.8rem;
-      color: #777;
-      margin-top: 4px;
-    }}
-    .category {{ margin-bottom: 28px; }}
-    .cat-title {{
       font-size: 0.95rem;
+      color: #777;
+      margin-top: 6px;
+    }}
+    .category {{ margin-bottom: 36px; }}
+    .cat-title {{
+      font-size: 1.2rem;
       font-weight: 600;
       color: #333;
-      padding-bottom: 4px;
-      margin-bottom: 12px;
+      padding-bottom: 6px;
+      margin-bottom: 16px;
       border-bottom: 1px solid #d0d0d0;
       display: flex;
       align-items: baseline;
       gap: 8px;
     }}
     .cat-count {{
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       font-weight: 400;
       color: #999;
       margin-left: auto;
     }}
-    .cards {{ display: grid; gap: 12px; grid-template-columns: 1fr; }}
+    .cards {{ display: grid; gap: 16px; grid-template-columns: 1fr; }}
     .card {{
-      padding: 10px 0;
+      padding: 14px 0;
       border-bottom: 1px solid #eee;
     }}
     .card:last-child {{ border-bottom: none; }}
@@ -177,39 +178,39 @@ def build_html(articles_by_cat: dict) -> str:
       color: #1a1a1a;
     }}
     .source {{
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       color: #888;
-      margin-bottom: 3px;
+      margin-bottom: 5px;
       letter-spacing: 0.03em;
     }}
     a.title {{
       display: block;
-      font-size: 0.95rem;
+      font-size: 1.15rem;
       font-weight: 600;
       color: #1a1a1a;
       text-decoration: none;
-      margin-bottom: 4px;
-      line-height: 1.45;
+      margin-bottom: 6px;
+      line-height: 1.5;
     }}
     a.title:hover {{ text-decoration: underline; }}
     .summary {{
-      font-size: 0.8rem;
+      font-size: 1rem;
       color: #555;
-      line-height: 1.65;
+      line-height: 1.7;
     }}
-    .empty {{ color: #aaa; font-size: 0.85rem; padding: 4px 0; }}
+    .empty {{ color: #aaa; font-size: 1rem; padding: 4px 0; }}
 
     /* タブレット以上: コンテンツ幅制限 */
     @media (min-width: 640px) {{
-      body {{ max-width: 720px; margin: 0 auto; padding: 32px 24px; }}
-      header h1 {{ font-size: 1.25rem; }}
+      body {{ max-width: 760px; margin: 0 auto; padding: 36px 28px; font-size: 17px; }}
+      header h1 {{ font-size: 1.5rem; }}
     }}
 
     /* PC: 2カラム配置 */
     @media (min-width: 1024px) {{
-      body {{ max-width: 1100px; padding: 40px 32px; }}
-      .cards {{ grid-template-columns: 1fr 1fr; gap: 16px 32px; }}
-      .card {{ padding: 12px 0; }}
+      body {{ max-width: 1180px; padding: 44px 36px; }}
+      .cards {{ grid-template-columns: 1fr 1fr; gap: 20px 40px; }}
+      .card {{ padding: 14px 0; }}
     }}
   </style>
 </head>
