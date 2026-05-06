@@ -2,9 +2,9 @@ FEEDS = {
     "A": {
         "name": "木材価格・建設業界",
         "sources": {
-            "Google News 木材価格": "https://news.google.com/rss/search?q=%E6%9C%A8%E6%9D%90%E4%BE%A1%E6%A0%BC&hl=ja&gl=JP&ceid=JP:ja",
-            "Google News 建設業界": "https://news.google.com/rss/search?q=%E5%BB%BA%E8%A8%AD%E6%A5%AD%E7%95%8C&hl=ja&gl=JP&ceid=JP:ja",
-            "Google News 住宅着工": "https://news.google.com/rss/search?q=%E4%BD%8F%E5%AE%85%E7%9D%80%E5%B7%A5&hl=ja&gl=JP&ceid=JP:ja",
+            "Google News 木材価格": "https://news.google.com/rss/search?q=%E6%9C%A8%E6%9D%90%E4%BE%A1%E6%A0%BC+when%3A2d&hl=ja&gl=JP&ceid=JP:ja",
+            "Google News 建設業界": "https://news.google.com/rss/search?q=%E5%BB%BA%E8%A8%AD%E6%A5%AD%E7%95%8C+when%3A2d&hl=ja&gl=JP&ceid=JP:ja",
+            "Google News 住宅着工": "https://news.google.com/rss/search?q=%E4%BD%8F%E5%AE%85%E7%9D%80%E5%B7%A5+when%3A2d&hl=ja&gl=JP&ceid=JP:ja",
         },
     },
     "B": {

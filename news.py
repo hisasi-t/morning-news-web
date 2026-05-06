@@ -4,6 +4,7 @@
 import os
 import re
 import sys
+import time
 import datetime
 import html as html_module
 
@@ -45,6 +46,11 @@ def fetch_articles() -> dict:
                               getattr(entry, "description", ""))
                 summary = re.sub(r"<[^>]+>", "", summary_raw)[:200]
 
+                # 日時取得（published優先、なければupdated、なければNone）
+                pub_struct = (getattr(entry, "published_parsed", None)
+                              or getattr(entry, "updated_parsed", None))
+                pub_ts = time.mktime(pub_struct) if pub_struct else 0
+
                 combined = title + " " + summary
                 matched_cats = matching_categories(combined)
                 highlight = primary_cat in matched_cats
@@ -55,16 +61,38 @@ def fetch_articles() -> dict:
                     "link":      link,
                     "summary":   summary,
                     "highlight": highlight,
+                    "pub_ts":    pub_ts,
                 }
                 result[primary_cat].append(article)
 
+    # 各カテゴリ: 新しい順 → highlight優先 → 上限
     for cat in result:
-        articles = result[cat]
+        articles = sorted(result[cat], key=lambda a: a["pub_ts"], reverse=True)
         highlighted = [a for a in articles if a["highlight"]]
         normal      = [a for a in articles if not a["highlight"]]
         result[cat] = (highlighted + normal)[:MAX_ITEMS_PER_CATEGORY]
 
     return result
+
+
+def relative_time(pub_ts: float) -> str:
+    """配信時刻を「3時間前」「昨日 14:30」「2日前」みたいに整形"""
+    if not pub_ts:
+        return ""
+    now = time.time()
+    diff = now - pub_ts
+    if diff < 60:
+        return "たった今"
+    if diff < 3600:
+        return f"{int(diff // 60)}分前"
+    if diff < 86400:
+        return f"{int(diff // 3600)}時間前"
+    if diff < 86400 * 2:
+        return f"昨日 {datetime.datetime.fromtimestamp(pub_ts).strftime('%H:%M')}"
+    days = int(diff // 86400)
+    if days < 7:
+        return f"{days}日前"
+    return datetime.datetime.fromtimestamp(pub_ts).strftime("%-m月%-d日")
 
 
 # ---- HTML生成 --------------------------------------------------------
@@ -74,11 +102,13 @@ def card_html(article: dict) -> str:
     source_t  = html_module.escape(article["source"])
     summary_t = html_module.escape(article["summary"])
     link_t    = html_module.escape(article["link"])
+    when_t    = html_module.escape(relative_time(article.get("pub_ts", 0)))
     cls = "card highlight" if article["highlight"] else "card"
     summary_block = f'<p class="summary">{summary_t}</p>' if summary_t else ""
+    when_block = f'<span class="when">{when_t}</span>' if when_t else ""
     return f"""
     <article class="{cls}">
-      <div class="source">{source_t}</div>
+      <div class="meta-line"><span class="source">{source_t}</span>{when_block}</div>
       <a class="title" href="{link_t}" target="_blank" rel="noopener">{title_t}</a>
       {summary_block}
     </article>"""
@@ -149,6 +179,16 @@ def build_html(articles_by_cat: dict) -> str:
       color: #777;
       margin-top: 6px;
     }}
+    header .tip {{
+      font-size: 0.8rem;
+      color: #999;
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: #f7f7f7;
+      border-radius: 4px;
+      line-height: 1.5;
+    }}
+    header .tip b {{ color: #1a1a1a; }}
     .category {{ margin-bottom: 36px; }}
     .cat-title {{
       font-size: 1.2rem;
@@ -177,11 +217,22 @@ def build_html(articles_by_cat: dict) -> str:
       content: "★ ";
       color: #1a1a1a;
     }}
+    .meta-line {{
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 5px;
+      gap: 8px;
+    }}
     .source {{
       font-size: 0.85rem;
       color: #888;
-      margin-bottom: 5px;
       letter-spacing: 0.03em;
+    }}
+    .when {{
+      font-size: 0.78rem;
+      color: #aaa;
+      flex-shrink: 0;
     }}
     a.title {{
       display: block;
@@ -218,6 +269,7 @@ def build_html(articles_by_cat: dict) -> str:
   <header>
     <h1>朝刊</h1>
     <div class="meta">{date_str} {time_str} 配信 / 計{total}件</div>
+    <div class="tip">読みづらいリンク先は、Safariの「<b>あA</b>」→「<b>Webサイトを表示</b>」または「<b>リーダーを表示</b>」で整います</div>
   </header>
   {sections}
 </body>
