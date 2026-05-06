@@ -140,6 +140,7 @@ def build_html(articles_by_cat: dict) -> str:
     now      = datetime.datetime.now()
     date_str = now.strftime("%Y年%m月%d日")
     time_str = now.strftime("%H:%M")
+    build_ts = int(now.timestamp())  # JS側で経過時間を判定するため
     total = sum(len(a) for a in articles_by_cat.values())
 
     sections = "".join(
@@ -152,6 +153,12 @@ def build_html(articles_by_cat: dict) -> str:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
+  <!-- ホーム画面アプリで古いキャッシュを掴まないようにする -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="朝刊">
   <title>朝刊 {date_str}</title>
   <style>
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
@@ -178,7 +185,22 @@ def build_html(articles_by_cat: dict) -> str:
       font-size: 0.95rem;
       color: #777;
       margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }}
+    #refresh-btn {{
+      margin-left: auto;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+    }}
+    #refresh-btn:active {{ opacity: 0.7; }}
     header .tip {{
       font-size: 0.8rem;
       color: #999;
@@ -268,10 +290,44 @@ def build_html(articles_by_cat: dict) -> str:
 <body>
   <header>
     <h1>朝刊</h1>
-    <div class="meta">{date_str} {time_str} 配信 / 計{total}件</div>
+    <div class="meta">
+      <span>{date_str} {time_str} 配信 / 計{total}件</span>
+      <button id="refresh-btn" type="button">更新</button>
+    </div>
     <div class="tip">読みづらいリンク先は、Safariの「<b>あA</b>」→「<b>Webサイトを表示</b>」または「<b>リーダーを表示</b>」で整います</div>
   </header>
   {sections}
+
+  <script>
+    // この朝刊が生成された時刻（UNIXタイムスタンプ）
+    const BUILD_TS = {build_ts};
+
+    // 強制再読み込み（キャッシュ無視）
+    function hardReload() {{
+      const url = new URL(window.location.href);
+      url.searchParams.set('_t', Date.now());
+      window.location.href = url.toString();
+    }}
+
+    // 「更新」ボタン
+    document.getElementById('refresh-btn').addEventListener('click', hardReload);
+
+    // ホーム画面アプリで戻ってきた時、ページが30分以上古ければ自動更新
+    document.addEventListener('visibilitychange', () => {{
+      if (document.visibilityState === 'visible') {{
+        const ageMin = (Date.now() / 1000 - BUILD_TS) / 60;
+        if (ageMin > 30) hardReload();
+      }}
+    }});
+
+    // pageshow（戻る/進むキャッシュからの復元時）でも判定
+    window.addEventListener('pageshow', (e) => {{
+      if (e.persisted) {{
+        const ageMin = (Date.now() / 1000 - BUILD_TS) / 60;
+        if (ageMin > 30) hardReload();
+      }}
+    }});
+  </script>
 </body>
 </html>"""
 

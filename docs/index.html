@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
+  <!-- ホーム画面アプリで古いキャッシュを掴まないようにする -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="朝刊">
   <title>朝刊 2026年05月07日</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +36,22 @@
       font-size: 0.95rem;
       color: #777;
       margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
+    #refresh-btn {
+      margin-left: auto;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    #refresh-btn:active { opacity: 0.7; }
     header .tip {
       font-size: 0.8rem;
       color: #999;
@@ -120,7 +141,10 @@
 <body>
   <header>
     <h1>朝刊</h1>
-    <div class="meta">2026年05月07日 03:41 配信 / 計40件</div>
+    <div class="meta">
+      <span>2026年05月07日 03:48 配信 / 計40件</span>
+      <button id="refresh-btn" type="button">更新</button>
+    </div>
     <div class="tip">読みづらいリンク先は、Safariの「<b>あA</b>」→「<b>Webサイトを表示</b>」または「<b>リーダーを表示</b>」で整います</div>
   </header>
   
@@ -130,6 +154,11 @@
       <span class="cat-count">10</span>
     </h2>
     <div class="cards">
+    <article class="card highlight">
+      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">16時間前</span></div>
+      <a class="title" href="https://news.google.com/rss/articles/CBMi9ARBVV95cUxNSkNLRHlTM1dTMHRqV0xXMHN0NWYyZzNiVGpaekh0dWFhcDItbmwwZW1hZ016NXJuaEdVZkxRQ1RqRTRza2tOcTJodWMzUkhSVl9xT2lIMWJhZjJIdnN0Q1ZReGJ2MHcxeHdfV05hWGFENm1kTDBtd2RGRXJ5V1dwWExCSFhXY2o1Y1kzVko4ZzAyQkR1YnhGMVdXS0Fzb05lS2dsWnN3ZXN0aXdHNE1vbkFjQVVaRGtIZkxDUm1QUjhvM1hqazVUXzVNS0ZBYUJRbWw5NFo2UjhPdm9fZlloRjNCZENGQnFOdUtYVncyRHp3bXpiV3BILUI3MWtDYmdobFNhbXVVVXFJMTRIREtWdnJNem9iWGRla0ZEZ3hOZjN0UTBfX2I3RzM3ZnB0SGVPaUhsOGNqamlCeHFTTEMtRmNxbEhBcFhFZVloNGRjbUpaZWM5dTJURk82V05abklqaW5QcWxJc3V5UFV2TUdhdUdOSG9YaDlaRm94Ulpnc1BsMkk1d3A1dnZMLWpuY0Y5VkNFeUdXUTFqU18zM1F6VnFrWlh3Tldocm1Ed0VsdktyOGRBcUxjN29mendmdlpIQnd1R0lrZUxUX2RSNnZtd2w5NjY4YXc4cVpGUWIwdThvSmdjbVp2Y2NsMTRpTjdfRGRoNlU0T0ZnNXJxci00dlRzSFlVazhNUk0wWUJiUjN2ZUJ2YXBJd2FEQmxhampQM0JIMVJmVGNkUVpxWENvaEZQcU5zUXFjUnJtQS1fUHd3OVVxN0NhbGFvTEZ5SnR3dF9FLTNYYmh5eE9HZDF6ZDB2Tk5BdGMyX0dVVzZmN1JEMnB4?oc=5" target="_blank" rel="noopener">「塩ビ管の在庫はほぼゼロ」資材の入手困難にあえぐ建設業界 イラン情勢の影響が「脆弱な供給網」を直撃 - MSN</a>
+      <p class="summary">「塩ビ管の在庫はほぼゼロ」資材の入手困難にあえぐ建設業界 イラン情勢の影響が「脆弱な供給網」を直撃&amp;nbsp;&amp;nbsp;MSN</p>
+    </article>
     <article class="card highlight">
       <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">23時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMickFVX3lxTFBUcEtDXy0wN0phQnNNb0wybjlXZkppZFh0Z2dTcGg5eWhXd3B3b1RRUEFMZi0zbFUtWUlMZ0xNdWs2V0JDQlR4MzRpczJMRlJNcUdkak93SWlScFYzOTR0amNYMF84cml4RFh5YXFYN0xUZw?oc=5" target="_blank" rel="noopener">【各種住宅・建築・他】全国建設業協会：建設資材の需給改善を緊急要望、価格転嫁と工期延長対応を国交相に求める - みんなの広報宣伝部</a>
@@ -159,11 +188,6 @@
       <div class="meta-line"><span class="source">Google News 住宅着工</span><span class="when">17時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQV1RlUTN2ajJoTG9ScEE4YnVXSEdKSG5PemhEWWhGRXdvTFp5WGJ5d29NaksyTkJGdHRNVmlNOHI0U2NwTVFNeVdlcjlBQVpoQmptWkx4WmNOdkJZQ1NxbUZpZzhLdUtZMmpZbURCWXJjVDE4bFlWRTliVWRsRl8yN1VXa3pDeDg?oc=5" target="_blank" rel="noopener">海外マーケットトピック－アマゾン1－3月期、ＡＷＳ売上高成長率が市場予想上回る AI需要が追い風＝ロイター - Yahoo!ファイナンス</a>
       <p class="summary">海外マーケットトピック－アマゾン1－3月期、ＡＷＳ売上高成長率が市場予想上回る AI需要が追い風＝ロイター&amp;nbsp;&amp;nbsp;Yahoo!ファイナンス</p>
-    </article>
-    <article class="card">
-      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">21時間前</span></div>
-      <a class="title" href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE14MWVPZDFYUVdwNENfR1Z1R3BlaGw3dVR4Ym9iRmk3RERKelVRVWY5bFBlSlRKa01WRDRENDJDYnVBNE9IQk5VV0dOcGtibmc?oc=5" target="_blank" rel="noopener">エレベーターピットバッファーの世界市場（2026年～2032年）、市場規模（オイルバッファー、ポリウレタンバッファー）・分析レポートを発表 - アットプレス</a>
-      <p class="summary">エレベーターピットバッファーの世界市場（2026年～2032年）、市場規模（オイルバッファー、ポリウレタンバッファー）・分析レポートを発表&amp;nbsp;&amp;nbsp;アットプレス</p>
     </article>
     <article class="card">
       <div class="meta-line"><span class="source">Google News 木材価格</span><span class="when">22時間前</span></div>
@@ -250,7 +274,7 @@
       <p class="summary">サブエージェントの定義、フロントマター15項目、description設計、4設計原則、Skills vs Agentsの判断軸、公式プラグイン3種解読、4ワークフローまで、Claude Codeサブエージェントを基礎から実践までぜんぶ詰めた完全マスター本やで。</p>
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">Qiita</span><span class="when">23時間前</span></div>
+      <div class="meta-line"><span class="source">Qiita</span><span class="when">昨日 03:47</span></div>
       <a class="title" href="https://qiita.com/tuanphan/items/b05513ade79cef735f90?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener">[Frontend Performance - Part 12] React最適化の完成：再レンダリング・メモ化・State設計を完全制覇</a>
       <p class="summary">📝 注意
 本記事はAIの補助を受けて編集しています。
@@ -350,7 +374,7 @@ Claude Codeを使い始めてしばらく経つと、こんな壁にぶつかり
       <p class="summary">【心理テスト】旅先の屋台で、ある物が目に入りました。それは何？ 選んだ答えからわかるのは、あなたが削るべき習慣。人生を豊かにし、自分を知るきっかけにもなる「心理テスト」をお届けします。</p>
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">13時間前</span></div>
+      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">14時間前</span></div>
       <a class="title" href="https://www.lifehacker.jp/article/2605-not-todo-after-holiday/" target="_blank" rel="noopener">まず手放す。休み明けの「やらないことリスト」</a>
       <p class="summary">休み明けに気が重くなるのはなぜ？「頑張ろう」と気合いを入れるより、「やらないこと」を決めて力を抜くのが正解です。休みを採点しない、予定を詰めすぎないなど、日常へすんなり戻るためのヒントをお届けします。</p>
     </article>
@@ -360,7 +384,7 @@ Claude Codeを使い始めてしばらく経つと、こんな壁にぶつかり
       <p class="summary">筋肉の緊張をほぐして正しい姿勢にすることができ、肋骨が広がりことで大きく呼吸ができリラックス効果にも繋がる「ストレッチポール」をご紹介します。</p>
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">14時間前</span></div>
+      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">15時間前</span></div>
       <a class="title" href="https://www.lifehacker.jp/article/2605-focus-on-work/" target="_blank" rel="noopener">連休明けの仕事、グッとラクになる！溜まったメールやタスクにつまずかない4つのコツ</a>
       <p class="summary">GW明けのやる気を無理なく引き出すコツを紹介。ToDon’tリストやRAFTテクニック、PC環境の見直し、逆ポモドーロで、仕事モードへスムーズに切り替えよう。</p>
     </article>
@@ -402,5 +426,36 @@ Claude Codeを使い始めてしばらく経つと、こんな壁にぶつかり
       <p class="summary">なかなか眠れない状態が続く「不眠症」は、かつて他の病気や精神的な問題の結果として扱われることが多く、不眠症そのものは治療対象にされにくい時期がありました。ラフバラー大学で心理学を教えるユリアナ・ハルテスク氏が、不眠症をめぐる科学者の見方が2000年代初頭からどのように変わったのかを解説しています。続きを読む...</p>
     </article></div>
   </section>
+
+  <script>
+    // この朝刊が生成された時刻（UNIXタイムスタンプ）
+    const BUILD_TS = 1778093317;
+
+    // 強制再読み込み（キャッシュ無視）
+    function hardReload() {
+      const url = new URL(window.location.href);
+      url.searchParams.set('_t', Date.now());
+      window.location.href = url.toString();
+    }
+
+    // 「更新」ボタン
+    document.getElementById('refresh-btn').addEventListener('click', hardReload);
+
+    // ホーム画面アプリで戻ってきた時、ページが30分以上古ければ自動更新
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        const ageMin = (Date.now() / 1000 - BUILD_TS) / 60;
+        if (ageMin > 30) hardReload();
+      }
+    });
+
+    // pageshow（戻る/進むキャッシュからの復元時）でも判定
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        const ageMin = (Date.now() / 1000 - BUILD_TS) / 60;
+        if (ageMin > 30) hardReload();
+      }
+    });
+  </script>
 </body>
 </html>
