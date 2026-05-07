@@ -137,7 +137,9 @@ def section_html(cat_id: str, articles: list) -> str:
 
 
 def build_html(articles_by_cat: dict) -> str:
-    now      = datetime.datetime.now()
+    # GitHub Actions はUTCで動くので、必ずJSTに変換してから日付を出す
+    JST = datetime.timezone(datetime.timedelta(hours=9))
+    now      = datetime.datetime.now(JST)
     date_str = now.strftime("%Y年%m月%d日")
     time_str = now.strftime("%H:%M")
     build_ts = int(now.timestamp())  # JS側で経過時間を判定するため
