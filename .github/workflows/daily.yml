@@ -2,8 +2,10 @@ name: Generate morning news
 
 on:
   schedule:
-    # 毎朝6:30 JST = 21:30 UTC（前日）
-    - cron: "30 21 * * *"
+    # GitHub Actions無料枠は0/15/30/45分が混雑するので中途半端な分にする
+    # 念のため2回トライ：どちらか通れば当日朝の朝刊が間に合う
+    - cron: "37 21 * * *"  # 06:37 JST 本命
+    - cron: "17 22 * * *"  # 07:17 JST 予備
   workflow_dispatch:
 
 permissions:
