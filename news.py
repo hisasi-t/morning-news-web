@@ -5,6 +5,7 @@ import os
 import re
 import sys
 import time
+import json
 import datetime
 import html as html_module
 
@@ -304,31 +305,39 @@ def build_html(articles_by_cat: dict) -> str:
     // この朝刊が生成された時刻（UNIXタイムスタンプ）
     const BUILD_TS = {build_ts};
 
-    // 強制再読み込み（キャッシュ無視）
-    function hardReload() {{
+    // version.json を毎回fetchし、サーバー側が新しければ確実に再読込する
+    // （HTMLはPWAで強くキャッシュされるが、別ファイル＋no-store＋クエリ付きなら最新が取れる）
+    async function checkForUpdates() {{
+      try {{
+        const res = await fetch('./version.json?t=' + Date.now(), {{ cache: 'no-store' }});
+        if (!res.ok) return;
+        const v = await res.json();
+        if (v.build_ts && v.build_ts > BUILD_TS) {{
+          // サーバーに新しい朝刊あり → 新しいBUILD_TSをURLに付けて遷移（iOSは別URL扱い）
+          const url = new URL(window.location.href);
+          url.searchParams.set('v', v.build_ts);
+          window.location.href = url.toString();
+        }}
+      }} catch (e) {{ /* オフライン等は無視 */ }}
+    }}
+
+    // 手動「更新」ボタン: 強制リロード
+    document.getElementById('refresh-btn').addEventListener('click', () => {{
       const url = new URL(window.location.href);
       url.searchParams.set('_t', Date.now());
       window.location.href = url.toString();
-    }}
+    }});
 
-    // 「更新」ボタン
-    document.getElementById('refresh-btn').addEventListener('click', hardReload);
+    // 初回表示時にチェック
+    checkForUpdates();
 
-    // ホーム画面アプリで戻ってきた時、ページが30分以上古ければ自動更新
+    // ホーム画面アプリで戻ってきた時にチェック
     document.addEventListener('visibilitychange', () => {{
-      if (document.visibilityState === 'visible') {{
-        const ageMin = (Date.now() / 1000 - BUILD_TS) / 60;
-        if (ageMin > 30) hardReload();
-      }}
+      if (document.visibilityState === 'visible') checkForUpdates();
     }});
 
-    // pageshow（戻る/進むキャッシュからの復元時）でも判定
-    window.addEventListener('pageshow', (e) => {{
-      if (e.persisted) {{
-        const ageMin = (Date.now() / 1000 - BUILD_TS) / 60;
-        if (ageMin > 30) hardReload();
-      }}
-    }});
+    // ブラウザ戻る/進むキャッシュからの復元時にもチェック
+    window.addEventListener('pageshow', () => checkForUpdates());
   </script>
 </body>
 </html>"""
@@ -347,6 +356,18 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"\nHTML生成完了: {OUTPUT_FILE}")
+
+    # PWAキャッシュ突破用：JS側から fetch して最新かどうかを判定する小さなファイル
+    JST = datetime.timezone(datetime.timedelta(hours=9))
+    now = datetime.datetime.now(JST)
+    version_path = os.path.join(OUTPUT_DIR, "version.json")
+    with open(version_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "build_ts": int(now.timestamp()),
+            "date":     now.strftime("%Y-%m-%d"),
+            "time":     now.strftime("%H:%M"),
+        }, f, ensure_ascii=False)
+    print(f"version.json生成完了: {version_path}")
 
 
 if __name__ == "__main__":
