@@ -1,11 +1,9 @@
 name: Generate morning news
 
 on:
-  schedule:
-    # GitHub Actions無料枠は0/15/30/45分が混雑するので中途半端な分にする
-    # 念のため2回トライ：どちらか通れば当日朝の朝刊が間に合う
-    - cron: "37 21 * * *"  # 06:37 JST 本命
-    - cron: "17 22 * * *"  # 07:17 JST 予備
+  # スケジュール起動は Cloudflare Worker (morning-news-cron) に一本化。
+  # GitHub Actionsのcronは遅延・スキップが多かったため廃止。
+  # Worker が毎朝6:30 JSTに workflow_dispatch を発火させる。
   workflow_dispatch:
 
 permissions:
