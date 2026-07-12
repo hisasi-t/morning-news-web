@@ -204,7 +204,7 @@ def build_html(articles_by_cat: dict) -> str:
   <style>
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
     /* スマホ基準: rem の元になるサイズを大きめに取る（拡大操作なしで読める大きさ） */
-    html {{ -webkit-text-size-adjust: 100%; font-size: 20px; }}
+    html {{ -webkit-text-size-adjust: 100%; font-size: 40px; }}
     body {{
       background: #ffffff;
       color: #1a1a1a;
