@@ -4,6 +4,7 @@ KEYWORDS = {
         "工務店", "DIY", "木材", "在来工法", "棟上げ", "墨付け",
         "木材価格", "建設業界", "住宅着工", "建材", "資材高騰",
         "ウッドショック", "新築", "戸建", "ゼネコン", "公共工事",
+        "断熱", "断熱材", "省エネ基準", "気密",
     ],
     "B": [
         "Claude", "Anthropic", "ChatGPT", "OpenAI", "Gemini",
@@ -18,6 +19,12 @@ KEYWORDS = {
         "Obsidian", "ノート術", "Zettelkasten", "PKM",
         "知的生産", "ライフログ", "デジタルガーデン",
         "Notion", "セカンドブレイン",
+    ],
+    "F": [
+        "insulation", "thermal", "airtight", "passive house",
+        "retrofit", "energy efficiency", "heat pump", "R-value", "U-value",
+        "mineral wool", "cellulose", "wood fiber", "hempcrete", "aerogel",
+        "mass timber", "CLT", "cross-laminated", "timber", "embodied carbon",
     ],
     "E": [
         "ナイトライダー", "KITT", "アイアンマン", "ジャービス",

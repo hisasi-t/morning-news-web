@@ -28,6 +28,19 @@ def matching_categories(text: str) -> list:
     return [cat for cat, kws in KEYWORDS_LOWER.items() if any(kw in t for kw in kws)]
 
 
+def translate_ja(text: str) -> str:
+    """英語テキストを日本語へ翻訳（失敗したら原文のまま返す）"""
+    if not text or not text.strip():
+        return text
+    try:
+        from deep_translator import GoogleTranslator
+        result = GoogleTranslator(source="auto", target="ja").translate(text[:1500])
+        return result if result else text
+    except Exception as e:
+        print(f"[translate SKIP] {e}", file=sys.stderr)
+        return text
+
+
 def fetch_articles() -> dict:
     result = {cat: [] for cat in FEEDS}
 
@@ -66,12 +79,30 @@ def fetch_articles() -> dict:
                 }
                 result[primary_cat].append(article)
 
-    # 各カテゴリ: 新しい順 → highlight優先 → 上限
+    # 各カテゴリ: 重複除去 → 新しい順 → highlight優先 → 上限
     for cat in result:
         articles = sorted(result[cat], key=lambda a: a["pub_ts"], reverse=True)
-        highlighted = [a for a in articles if a["highlight"]]
-        normal      = [a for a in articles if not a["highlight"]]
+        # 同じ記事を複数の検索が拾った場合の重複除去（タイトル先頭40字で判定）
+        seen = set()
+        deduped = []
+        for a in articles:
+            key = a["title"].lower()[:40]
+            if key in seen:
+                continue
+            seen.add(key)
+            deduped.append(a)
+        highlighted = [a for a in deduped if a["highlight"]]
+        normal      = [a for a in deduped if not a["highlight"]]
         result[cat] = (highlighted + normal)[:MAX_ITEMS_PER_CATEGORY]
+
+    # 翻訳指定カテゴリ: 上限で絞った後にタイトル・要約を日本語化（キーワード判定は原文で済み）
+    for cat, cat_info in FEEDS.items():
+        if not cat_info.get("translate"):
+            continue
+        for a in result[cat]:
+            print(f"  翻訳中: {a['title'][:50]}...", flush=True)
+            a["title"]   = translate_ja(a["title"])
+            a["summary"] = translate_ja(a["summary"])
 
     return result
 
