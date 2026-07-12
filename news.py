@@ -203,8 +203,13 @@ def build_html(articles_by_cat: dict) -> str:
   <title>朝刊 {date_str}</title>
   <style>
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-    /* スマホ基準: rem の元になるサイズを大きめに取る（拡大操作なしで読める大きさ） */
-    html {{ -webkit-text-size-adjust: 100%; font-size: 40px; }}
+    html {{ -webkit-text-size-adjust: 100%; font-size: 20px; }}
+    /* タッチ端末（スマホ）: 文字サイズを「画面幅の5.5%」で決める。
+       Safariの「デスクトップ用サイト表示」でもモバイル表示でも実寸が同じになり、
+       拡大操作なしで読める。大きさ調整はこの 5.5vw の数字ひとつ */
+    @media (hover: none) and (pointer: coarse) {{
+      html {{ font-size: 5.5vw; }}
+    }}
     body {{
       background: #ffffff;
       color: #1a1a1a;
@@ -315,11 +320,15 @@ def build_html(articles_by_cat: dict) -> str:
     }}
     .empty {{ color: #aaa; font-size: 1rem; padding: 4px 0; }}
 
-    /* タブレット以上: コンテンツ幅制限（文字はPC従来サイズに戻す） */
+    /* タブレット以上: コンテンツ幅制限 */
     @media (min-width: 640px) {{
-      html {{ font-size: 16px; }}
-      body {{ max-width: 760px; margin: 0 auto; padding: 36px 28px; font-size: 17px; }}
+      body {{ max-width: 760px; margin: 0 auto; padding: 36px 28px; }}
       header h1 {{ font-size: 1.5rem; }}
+    }}
+    /* マウス操作のPCだけ従来の文字サイズ */
+    @media (min-width: 640px) and (hover: hover) and (pointer: fine) {{
+      html {{ font-size: 16px; }}
+      body {{ font-size: 17px; }}
     }}
 
     /* PC: 2カラム配置 */

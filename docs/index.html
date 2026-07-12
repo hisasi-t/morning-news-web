@@ -13,8 +13,13 @@
   <title>朝刊 2026年07月12日</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    /* スマホ基準: rem の元になるサイズを大きめに取る（拡大操作なしで読める大きさ） */
-    html { -webkit-text-size-adjust: 100%; font-size: 40px; }
+    html { -webkit-text-size-adjust: 100%; font-size: 20px; }
+    /* タッチ端末（スマホ）: 文字サイズを「画面幅の5.5%」で決める。
+       Safariの「デスクトップ用サイト表示」でもモバイル表示でも実寸が同じになり、
+       拡大操作なしで読める。大きさ調整はこの 5.5vw の数字ひとつ */
+    @media (hover: none) and (pointer: coarse) {
+      html { font-size: 5.5vw; }
+    }
     body {
       background: #ffffff;
       color: #1a1a1a;
@@ -125,11 +130,15 @@
     }
     .empty { color: #aaa; font-size: 1rem; padding: 4px 0; }
 
-    /* タブレット以上: コンテンツ幅制限（文字はPC従来サイズに戻す） */
+    /* タブレット以上: コンテンツ幅制限 */
     @media (min-width: 640px) {
-      html { font-size: 16px; }
-      body { max-width: 760px; margin: 0 auto; padding: 36px 28px; font-size: 17px; }
+      body { max-width: 760px; margin: 0 auto; padding: 36px 28px; }
       header h1 { font-size: 1.5rem; }
+    }
+    /* マウス操作のPCだけ従来の文字サイズ */
+    @media (min-width: 640px) and (hover: hover) and (pointer: fine) {
+      html { font-size: 16px; }
+      body { font-size: 17px; }
     }
 
     /* PC: 2カラム配置 */
@@ -144,7 +153,7 @@
   <header>
     <h1>朝刊</h1>
     <div class="meta">
-      <span>2026年07月12日 17:21 配信 / 計50件</span>
+      <span>2026年07月12日 20:01 配信 / 計50件</span>
       <button id="refresh-btn" type="button">更新</button>
     </div>
     <div class="tip">読みづらいリンク先は、Safariの「<b>あA</b>」→「<b>Webサイトを表示</b>」または「<b>リーダーを表示</b>」で整います</div>
@@ -157,7 +166,7 @@
     </h2>
     <div class="cards">
     <article class="card highlight">
-      <div class="meta-line"><span class="source">Google News 断熱</span><span class="when">22時間前</span></div>
+      <div class="meta-line"><span class="source">Google News 断熱</span><span class="when">昨日 19:10</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMidEFVX3lxTFBjU3BkMEhNLWxKRDY5NG9Mc2FTdzFrZmoxX3hHOWNJak1oUlhjRVVVYjFqSXI1X19mM0R2SDh5RjR5dkNfcjU2MlJ6WGtfYUZKR043RTJ4ekFhc3FKR0pENy01ZElWREVnUmxiZUZhWkYtSWNZ?oc=5" target="_blank" rel="noopener">カルティブ、学校体育館の空調整備・断熱改修をテーマとした自治体向けウェビナーに登壇 - Excite エキサイト</a>
       
     </article>
@@ -172,11 +181,6 @@
       
     </article>
     <article class="card highlight">
-      <div class="meta-line"><span class="source">Google News 断熱</span><span class="when">昨日 03:45</span></div>
-      <a class="title" href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE81dHRLVkg0WlJrbEtSem0xWnZLMDdzYzFYNjFrNjNJYlEzaTBIM1ZMOFNxOXZqMTJwbVB5SUZnajFWVVJqc0ZIaTZkbWRaeVE?oc=5" target="_blank" rel="noopener">氷が「最長6日間とけない」ってホント？ 真空断熱アイスジャグ - ROOMIE（ルーミー）</a>
-      
-    </article>
-    <article class="card highlight">
       <div class="meta-line"><span class="source">Google News 木材価格</span><span class="when">昨日 03:33</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMibkFVX3lxTFBabnZubllYWXFhd0dwMW5pZlA0b21ORTVGNVQ0SkQ1cW5mT3g1aE1MNzVUR0wwX2ttUDBJMEdQZmJUYm0ySHdnOUoxTktsZWhBRjE3RWRKRk9CVzR6RjJ4TDJWZnJVWWJzNFFWeFR3?oc=5" target="_blank" rel="noopener">脊振山で木材伐採中に木が倒れて沢に落ちたか ３０代男性が意識不明の重体 福岡・早良区 - Excite エキサイト</a>
       
@@ -186,23 +190,28 @@
       <a class="title" href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE5qbHl3UkVUS3BsMUlKU2gwMDViTGoxQVZjSjQzeTBHSE9GR3Btc3ZTVWZGZjY4SVdja2JCY3lMYVp1NUpLV2FrVGdLVVU3ZWc?oc=5" target="_blank" rel="noopener">産業用着脱式断熱ブランケットの世界市場（2026年～2032年）、市場規模（グラスウール断熱ブランケット、セラミック断熱ブランケット、ミネラルウール断熱ブランケット、その他）・分析レポートを発表 - アットプレス</a>
       
     </article>
+    <article class="card highlight">
+      <div class="meta-line"><span class="source">Google News 断熱</span><span class="when">2日前</span></div>
+      <a class="title" href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE1yUllIYmJnaWsxQ2hjdGl0ZjNFSzhKSEl4Z3pvR1VyTWMwQ0hDM1pBWkVGU2N0dG5QeXd4LUhEY0xkLXR2M2xFaGIwSjZvTnc?oc=5" target="_blank" rel="noopener">【KTJ 窓用フィルム】寝室の窓に「断熱フィルム」を貼って約1年。暑さ＆眩しさで目が覚めてしまうことが減りました - ROOMIE（ルーミー）</a>
+      
+    </article>
     <article class="card">
-      <div class="meta-line"><span class="source">Google News 住宅着工</span><span class="when">9時間前</span></div>
+      <div class="meta-line"><span class="source">Google News 住宅着工</span><span class="when">12時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMiYEFVX3lxTE53TDh5NnExZzV3UEdHYzZjdTB3R2tlTmFGS3dFWDNMeEtiZ1I5NzhvbE9oRW5QT3pZWk1POG9KMDNadW5RQ2J3QXVtU0RhMTEwNVJVcXlsX1ZJVmVXcC1LUw?oc=5" target="_blank" rel="noopener">株価指数先物 【週間展望】―中東情勢や半導体株物色の持続性、米決算の影響を見極め - 株探</a>
       
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">10時間前</span></div>
+      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">12時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMingFBVV95cUxQOGdXUjJPOE5Zd2UzNnNaU0RLMUVCdTc2ckZibzFlcUtpNG15dHQwLUFXb1FwWXJXMW1Fb0dCaHJIblZnVTlGcF9PTGVjSG1YWVdQMjYxZndYUDBVMUJSdlA4TGdUdzc5M2VaZVplMEFBNzdjZVU2amVXbzZ2bkpsQU1rYnM3ellQU3E0ZHcxTVAyTnpfb2o4LWtiY05KZw?oc=5" target="_blank" rel="noopener">シンガポールは建設労働者不足に対処するため、自動化を加速させている。 - Vietnam.vn</a>
       
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">Google News 住宅着工</span><span class="when">15時間前</span></div>
+      <div class="meta-line"><span class="source">Google News 住宅着工</span><span class="when">18時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMiUkFVX3lxTE9TQldjT2U4RzZTTktURXBQNE1iU3hQSjJuRFJVcENYdWtHTk9hYWpWRndQZ0lHWHBLVm42YXFpSl90ME1KNjNyUUtBWEZpSkV0YXc?oc=5" target="_blank" rel="noopener">【初受賞】「世田谷上馬のカフェ」がCLT OF THE YEAR 2025において優秀賞を受賞！ - 山陽新聞</a>
       
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">Google News 住宅着工</span><span class="when">16時間前</span></div>
+      <div class="meta-line"><span class="source">Google News 住宅着工</span><span class="when">19時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMidEFVX3lxTE9fekh0eV9WeGlHcmY4d0Z0VzFhZTVUVkxUWEdxdUZCVV9SbVNFaElMX0dzTEtRNUl0MFRnSjgwTzRmazVXNTk4U0ppUVZpajZaMVN0TjI3UDlYNjlFelBoZ05oUGR0djQ1QlBxNEVWeG4xbXZo?oc=5" target="_blank" rel="noopener">【焦点】ウォーシュFRB議長、初の議会証言へ－米物価統計巡り議論 - TBS NEWS DIG</a>
       
     </article></div>
@@ -234,12 +243,12 @@
       
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">Google News 海外・断熱</span><span class="when">19時間前</span></div>
+      <div class="meta-line"><span class="source">Google News 海外・断熱</span><span class="when">22時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMigwFBVV95cUxPWHlXdTgxcHlVNk1SWVMtMjhtUUVab3pvWEU5cHZDLTVKd3JIOUJqWGJRMjNON0Y1bU5tWHd1aU9YbFVhNzBsTVBMR1A3NTNyWjR6Zkp3aGdCZU1WRGIyZzVMV1F3c3VGR3BUUlhYc1FwN0NxS3YwQXFFUnVtYVhERnJ2SQ?oc=5" target="_blank" rel="noopener">猛暑に耐えられる家を建てる方法 - grist.org</a>
       
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">GreenBuildingAdvisor</span><span class="when">20時間前</span></div>
+      <div class="meta-line"><span class="source">GreenBuildingAdvisor</span><span class="when">23時間前</span></div>
       <a class="title" href="https://www.greenbuildingadvisor.com/question/insulating-basement-with-partially-cast-in-concrete-joists" target="_blank" rel="noopener">部分的にコンクリート打設根太を使用した断熱地下室</a>
       <p class="summary">GBA コミュニティの皆さん、私の 1960 年代のカルガリーの 2 階建て (ゾーン 7A) には、部分的にコンクリート打ちコンクリートの床根太があります。以下のスレッドを読みましたが、アプローチを最終決定する前にフィードバックが必要です。 参考資料：- NRCan 図6-</p>
     </article>
@@ -254,14 +263,14 @@
       <p class="summary">気候 6B で地上積雪荷重 90 psf のガレージ付き店舗の建物を建設しています。高さとコストに関する設計上の制約があるため、派手なホットルーフは作成していません…</p>
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">Google News 海外・建材</span><span class="when">昨日 19:53</span></div>
+      <div class="meta-line"><span class="source">Google News 海外・建材</span><span class="when">2日前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMioAFBVV95cUxQdzMtNnl1YXQ1cU9sX2piX1J6bVNoTnpQRjZ0cGFHY2E0ajlBWHJTS0RXOEdVV3NHNVUyRk9GZnlDamFKeFg1VmU1OGtERjBBSlVXOFhsN3ZMclhUOHVjNjVvVFdPWWpEYU15d2Q2STFPS1FXS0ppd3hwWDJHZ0FnM2ZLTmd2UHFHVDB3LUZSQm1wOHUzc181WEl2VjBoOVVB?oc=5" target="_blank" rel="noopener">ウェールズウールを織り込んで持続可能な建築設計の未来を実現 - カーディフ大学</a>
       
     </article>
     <article class="card">
       <div class="meta-line"><span class="source">GreenBuildingAdvisor</span><span class="when">2日前</span></div>
       <a class="title" href="https://www.greenbuildingadvisor.com/question/mini-split-sizing-verification" target="_blank" rel="noopener">複数分割設計のアドバイス</a>
-      <p class="summary">こんにちは、若い建築家です。より良い設計原則を採用するために最善を尽くしています。ニューヨーク州クイーンズ北部にある 1940 年代の一戸建て住宅の内装改修工事に取り組んでいます。それは…</p>
+      <p class="summary">こんにちは、若い建築家です。より良い設計原則を採用するために最善を尽くしています。ニューヨーク州クイーンズ北部にある 1940 年代の一戸建て住宅の内装改修に取り組んでいます。それは…</p>
     </article></div>
   </section>
   <section class="category">
@@ -381,7 +390,7 @@ Agent Toolkit for AWSの一部の方のAWS MCP Serverの話です。オープン
 ...</p>
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">Qiita</span><span class="when">昨日 17:52</span></div>
+      <div class="meta-line"><span class="source">Qiita</span><span class="when">2日前</span></div>
       <a class="title" href="https://qiita.com/sei_official/items/3ce11ea5faed795d47fc?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener">攻撃者はブラウザを開いて最初の5分で何を見るのか〜バグバウンティで認可不備（P1/P2）を報告してきた視点で書く、フロントエンドの実装防御ガイド〜</a>
       <p class="summary">はじめに
 フロントエンドのセキュリティというと、
@@ -427,28 +436,28 @@ CSRF対策
     <div class="cards">
     <article class="card">
       <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">9時間前</span></div>
-      <a class="title" href="https://www.lifehacker.jp/article/2607-lht-anker-nano-power-strip/" target="_blank" rel="noopener">Ankerの挟むタップ、これだけで驚くほど快適。「コンセント＋充電ポート付きデスク」完成しました</a>
-      <p class="summary">Ankerの電源タップ「Anker Nano Power Strip (10-in-1, 70W, クランプ式)」は、クランプ式でデスクに簡単に取り付けることができる電源タップで、ポート数も豊富。使ってみた感想をお届けします。</p>
-    </article>
-    <article class="card">
-      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">9時間前</span></div>
-      <a class="title" href="https://www.lifehacker.jp/article/amazon-sale-sanwa-aca/" target="_blank" rel="noopener">4000円超でも満足。昇降デスクに後付けした「クランプ式充電器」が手放せない</a>
-      <p class="summary">サンワサプライの『クランプ式USB充電器 ACA-IP51BK』は昇降デスクを使用している人や、ケーブルの整理をしたい人にオススメの充電器。使い方や感想をお届けします。</p>
+      <a class="title" href="https://www.lifehacker.jp/article/amazon-primeday-2026-0712-2/" target="_blank" rel="noopener">たった1つのコンセントで5台充電できる凄いヤツ</a>
+      
     </article>
     <article class="card">
       <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">10時間前</span></div>
-      <a class="title" href="https://www.lifehacker.jp/article/2607-amazon-xiaomi-smartband10-xbw/" target="_blank" rel="noopener">5000円台のXiaomiスマートバンド。仕事の集中と睡眠を1台で最適化する活用術</a>
-      <p class="summary">気に入って愛用していた「Xiaomi Smart Band 9」。紛失してしまったので「Xiaomi Smart Band 10」を買い直すことに。シャオミのスマートバンドを使い続けて3年になる筆者が、前モデルとの比較を含めてレビューします。率直な感想は「やっぱりシャオミのスマートバンドは間違いない！」です。</p>
+      <a class="title" href="https://www.lifehacker.jp/article/amazon-sale-anker-nano-dockingstation/" target="_blank" rel="noopener">PCのポート不足を解消。Ankerの新発想で、外出用ハブを買い足す必要がなくなった</a>
+      <p class="summary">「Anker Nano ドッキングステーション (13-in-1, 着脱式USB-C ハブ)」は、自宅とオフィスを行き来して働く人にオススメのドッキングステーション。使ってみた感想をお届けします。</p>
     </article>
     <article class="card">
       <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">10時間前</span></div>
-      <a class="title" href="https://www.lifehacker.jp/article/amazon-sale-apple-mabookneo-review/" target="_blank" rel="noopener">MacBook Neoは「ちょうどいいMac」なのか？ 使ってわかったリアルな立ち位置</a>
-      <p class="summary">Appleから3月11日に発売されたMacBook Neoをレビュー。Proは重い、iPadは物足りない──その中間にある使い勝手を、Air（M2）との比較やA18 Proの性能、実作業の体感をもとに解説します。どんな人に向いているのかも整理しました。</p>
+      <a class="title" href="https://www.lifehacker.jp/article/2607-amazon-lec-mogi-kiwami-ews/" target="_blank" rel="noopener">塗って5分待つだけ。水垢問題がきれいさっぱり解決する洗剤</a>
+      <p class="summary">水垢を緩めて落とす専用洗剤「レック 茂木和哉『極』」は、水回りの大掃除にピッタリ。研磨剤を含んだ酸性洗剤なので、ゴシゴシ擦らなくても、効果的に水垢を落としてくれます。</p>
     </article>
     <article class="card">
       <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">11時間前</span></div>
-      <a class="title" href="https://www.lifehacker.jp/article/iris-ohyama-hugel-extreme-cold-cooler-60l-amazon-prime-day/" target="_blank" rel="noopener">最大22日間キンキン続く、真空断熱クーラーボックス</a>
-      <p class="summary">アイリスオーヤマの「HUGEL EXTREME COLD 真空断熱クーラーボックス 60L」がAmazonプライムデーで37%オフ。最大22.8日間の保冷力を備え、連泊キャンプや大人数のアウトドアでも活躍します。60Lの大容量で、約100kgの耐荷重を活かしてサイドテーブルや簡易チェアとしても使える一台です。</p>
+      <a class="title" href="https://www.lifehacker.jp/article/2607-amazon-sale-anker-tap/" target="_blank" rel="noopener">こういうのが欲しかったんだよ！ズボラでも配線整理できるAnkerのクランプ式電源タップ</a>
+      <p class="summary">Amazonプライムデーセール＜7/13(月)23:59まで＞が開催中！編集部が厳選したデスクの配線整理に役立つAnkerの電源タップを紹介します。</p>
+    </article>
+    <article class="card">
+      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">12時間前</span></div>
+      <a class="title" href="https://www.lifehacker.jp/article/2607-lht-anker-nano-power-strip/" target="_blank" rel="noopener">Ankerの挟むタップ、これだけで驚くほど快適。「コンセント＋充電ポート付きデスク」完成しました</a>
+      <p class="summary">Ankerの電源タップ「Anker Nano Power Strip (10-in-1, 70W, クランプ式)」は、クランプ式でデスクに簡単に取り付けることができる電源タップで、ポート数も豊富。使ってみた感想をお届けします。</p>
     </article></div>
   </section>
   <section class="category">
@@ -458,35 +467,35 @@ CSRF対策
     </h2>
     <div class="cards">
     <article class="card">
-      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">9時間前</span></div>
+      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">10時間前</span></div>
+      <a class="title" href="https://gigazine.net/news/20260712-gamer-wins-legal-battle-hacked-xbox-account/" target="_blank" rel="noopener">Microsoftアカウントをハッキングされ「これまでXBOXで購入したゲームはすべて再購入するように」とサポートから言われたゲーマーが怒りの訴訟＆勝訴</a>
+      <p class="summary">XBOXで複数のゲームを購入していたとあるゲーマーが、Microsoftアカウントをハッキングされたためカスタマーサポートに連絡したところ、アカウントの復旧は不可能であり、失ったゲームは「すべて再購入するように」と回答されたそうです。これに対して、このゲーマーはMicrosoftに対して訴訟を起こし、無事勝訴しています。続きを読む...</p>
+    </article>
+    <article class="card">
+      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">11時間前</span></div>
+      <a class="title" href="https://gigazine.net/news/20260712-ytdlp-web-player/" target="_blank" rel="noopener">無料でページ内の動画をyt-dlp経由で広告なしに置き換える「YT-DLP Web Player」</a>
+      <p class="summary">様々な動画配信サイトのデータを保存できる「yt-dlp」は強力なダウンロードツールですが、視聴する前に一度ファイルをローカル環境へ保存し動画プレイヤーで再生するという手間がかかります。「YT-DLP Web Player」はyt-dlpを組み込んだバックエンドサーバーで、指定したサイトの動画を読み込みつつ専用プレイヤーに即座に配信し広告なしで視聴できる無料の動画配信システムです。続きを読む...</p>
+    </article>
+    <article class="card">
+      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">11時間前</span></div>
+      <a class="title" href="https://gigazine.net/news/20260712-take-yutaka-achieves-5000-wins/" target="_blank" rel="noopener">武豊騎手がJRA・地方・海外など含めた通算5000勝を達成</a>
+      <p class="summary">騎手生活40年目の節目の年を迎えているJRAのレジェンド・武豊騎手が、JRAや地方レース、海外での騎乗機会を含めての通算5000勝を、2026年7月12日開催のレースで達成しました。続きを読む...</p>
+    </article>
+    <article class="card">
+      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">12時間前</span></div>
       <a class="title" href="https://gigazine.net/news/20260712-bun-zig-rust/" target="_blank" rel="noopener">AI「Claude」を使って開発ツールの「Bun」の53万行のZigコード全てをRustへ書き換え、Zig作者もブログで反応</a>
       <p class="summary">JavaScriptランタイム「Bun」の開発チームが、AIコーディング支援ツール「Claude Code」を活用して進めていた、BunのZigコードをRustへ書き換える全面的な移植作業が完了したと発表しました。約53万行のZigコードがRustへ移植されたことで、メモリ管理に起因する不具合の削減が期待されています。続きを読む...</p>
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">10時間前</span></div>
+      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">13時間前</span></div>
       <a class="title" href="https://gigazine.net/news/20260712-apple-sues-openai/" target="_blank" rel="noopener">AppleがOpenAIを企業秘密侵害で提訴</a>
       <p class="summary">Appleが「ハードウェア開発に必要な情報を知的財産を盗まれた」として、OpenAIとOpenAIのハードウェア最高責任者を務めるタン・タン氏、同じくOpenAIの従業員であるチャン・リュウ氏を提訴しました。続きを読む...</p>
-    </article>
-    <article class="card">
-      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">14時間前</span></div>
-      <a class="title" href="https://gigazine.net/news/20260712-streetcomplete/" target="_blank" rel="noopener">あなたの付近の不完全な地図データが「クエスト」となりクリアすることでOpenStreetMapを更新できるアプリ「StreetComplete」</a>
-      <p class="summary">OpenStreetMapにはユーザー自身が地図を作成・編集することのできるオープンコラボレーションプロジェクトの側面がありますが、それなりにOpenStreetMapに関する専門知識が必要となるため誰でも手軽に編集できるとは言えません。StreetCompleteは調査が必要な近隣の場所を自動的に検索して「クエスト」として地図上に表示し、現地に行って簡単な質問に回答することでOpenStreet</p>
-    </article>
-    <article class="card">
-      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">16時間前</span></div>
-      <a class="title" href="https://gigazine.net/news/20260712-max-planck-paper-retracted/" target="_blank" rel="noopener">量子論の父として著名な物理学者マックス・プランクが80年以上前に発表した論文がなぜか撤回されていたと判明</a>
-      <p class="summary">量子論の創始者として知られる物理学者マックス・プランクの1940年と1942年の論文2本が、学術出版社の電子アーカイブ上で「撤回」扱いになっていることがわかりました。科学史家の調査により、その経緯と原因が判明しました。続きを読む...</p>
-    </article>
-    <article class="card">
-      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">17時間前</span></div>
-      <a class="title" href="https://gigazine.net/news/20260712-eshima-san-paperback/" target="_blank" rel="noopener">フルカラーコミック「作らせて！絵島さん」の紙書籍版をリリースしました</a>
-      <p class="summary">2026年4月にKindleコミックスをリリースしたフルカラーマンガ「作らせて！絵島さん」に、紙書籍版も登場しました。作者こだわりの1冊がどのようになっているのか、紙書籍版のサンプルとメイキングをお届けします。続きを読む...</p>
     </article></div>
   </section>
 
   <script>
     // この朝刊が生成された時刻（UNIXタイムスタンプ）
-    const BUILD_TS = 1783844501;
+    const BUILD_TS = 1783854093;
 
     // version.json を毎回fetchし、サーバー側が新しければ確実に再読込する
     // （HTMLはPWAで強くキャッシュされるが、別ファイル＋no-store＋クエリ付きなら最新が取れる）
