@@ -58,7 +58,8 @@ def fetch_articles() -> dict:
                 link  = getattr(entry, "link",  "#")
                 summary_raw = getattr(entry, "summary",
                               getattr(entry, "description", ""))
-                summary = re.sub(r"<[^>]+>", "", summary_raw)[:200]
+                summary = re.sub(r"<[^>]+>", "", summary_raw)
+                summary = html_module.unescape(summary).strip()[:200]
 
                 # 日時取得（published優先、なければupdated、なければNone）
                 pub_struct = (getattr(entry, "published_parsed", None)
@@ -68,6 +69,12 @@ def fetch_articles() -> dict:
                 combined = title + " " + summary
                 matched_cats = matching_categories(combined)
                 highlight = primary_cat in matched_cats
+
+                # Google News等はタイトルと同じ文を要約として返す。重複なら要約を省く
+                title_norm   = re.sub(r"\s+", "", title)[:25]
+                summary_norm = re.sub(r"\s+", "", summary)
+                if title_norm and summary_norm.startswith(title_norm):
+                    summary = ""
 
                 article = {
                     "source":    source_name,
@@ -196,12 +203,13 @@ def build_html(articles_by_cat: dict) -> str:
   <title>朝刊 {date_str}</title>
   <style>
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-    html {{ -webkit-text-size-adjust: 100%; }}
+    /* スマホ基準: rem の元になるサイズを大きめに取る（拡大操作なしで読める大きさ） */
+    html {{ -webkit-text-size-adjust: 100%; font-size: 20px; }}
     body {{
       background: #ffffff;
       color: #1a1a1a;
       font-family: -apple-system, "Helvetica Neue", "Hiragino Sans", sans-serif;
-      font-size: 18px;
+      font-size: 1rem;
       line-height: 1.65;
       padding: 18px;
     }}
@@ -292,7 +300,7 @@ def build_html(articles_by_cat: dict) -> str:
     }}
     a.title {{
       display: block;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: #1a1a1a;
       text-decoration: none;
@@ -307,8 +315,9 @@ def build_html(articles_by_cat: dict) -> str:
     }}
     .empty {{ color: #aaa; font-size: 1rem; padding: 4px 0; }}
 
-    /* タブレット以上: コンテンツ幅制限 */
+    /* タブレット以上: コンテンツ幅制限（文字はPC従来サイズに戻す） */
     @media (min-width: 640px) {{
+      html {{ font-size: 16px; }}
       body {{ max-width: 760px; margin: 0 auto; padding: 36px 28px; font-size: 17px; }}
       header h1 {{ font-size: 1.5rem; }}
     }}
