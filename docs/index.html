@@ -58,16 +58,6 @@
       font-family: inherit;
     }
     #refresh-btn:active { opacity: 0.7; }
-    header .tip {
-      font-size: 0.8rem;
-      color: #999;
-      margin-top: 8px;
-      padding: 6px 10px;
-      background: #f7f7f7;
-      border-radius: 4px;
-      line-height: 1.5;
-    }
-    header .tip b { color: #1a1a1a; }
     .category { margin-bottom: 36px; }
     .cat-title {
       font-size: 1.2rem;
@@ -130,6 +120,42 @@
     }
     .empty { color: #aaa; font-size: 1rem; padding: 4px 0; }
 
+    /* 記事を読む画面（一覧と同じ rem 基準なので、一覧と同じ大きさで読める） */
+    body.reading > header, body.reading > .category { display: none; }
+    #reader { max-width: 760px; margin: 0 auto; }
+    .reader-bar { margin-bottom: 18px; }
+    .reader-back {
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      font-size: 1rem;
+      border-radius: 4px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .reader-source { font-size: 0.85rem; color: #888; margin-bottom: 6px; }
+    .reader-title {
+      font-size: 1.35rem;
+      font-weight: 600;
+      line-height: 1.5;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .reader-body p { font-size: 1.1rem; line-height: 1.9; margin-bottom: 1.1em; }
+    .reader-body p.reader-msg { font-size: 0.95rem; color: #888; }
+    .reader-foot {
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid #d0d0d0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .reader-orig { font-size: 1rem; color: #1a1a1a; }
+
     /* タブレット以上: コンテンツ幅制限 */
     @media (min-width: 640px) {
       body { max-width: 760px; margin: 0 auto; padding: 36px 28px; }
@@ -153,10 +179,9 @@
   <header>
     <h1>朝刊</h1>
     <div class="meta">
-      <span>2026年09月26日 06:31 配信 / 計50件</span>
+      <span>2026年09月26日 06:59 配信 / 計45件</span>
       <button id="refresh-btn" type="button">更新</button>
     </div>
-    <div class="tip">読みづらいリンク先は、Safariの「<b>あA</b>」→「<b>Webサイトを表示</b>」または「<b>リーダーを表示</b>」で整います</div>
   </header>
   
   <section class="category">
@@ -166,7 +191,7 @@
     </h2>
     <div class="cards">
     <article class="card highlight">
-      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">4時間前</span></div>
+      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">5時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMiSkFVX3lxTE4zaVJJSkxGRVlpamVBMzBhR05kZ1NHbjNuczFXWjNDSjBsUkdfVGJfV0lfaGNLdmc0NVBhQUZEWnI0alIyQ2hoN3RR?oc=5" target="_blank" rel="noopener">グローバル建設業界における人工知能市場：規模、シェア、成長要因、産業動向の包括的分析（ - pando.life</a>
       
     </article>
@@ -176,17 +201,12 @@
       
     </article>
     <article class="card highlight">
-      <div class="meta-line"><span class="source">Google News 木材価格</span><span class="when">11時間前</span></div>
-      <a class="title" href="https://news.google.com/rss/articles/CBMiSkFVX3lxTE52SGZXMl8tSm9URjl1OTZEQ1o1Y2FvWlV6Tkw4WER2czMyd0hUOFlSME9GM2diTC1IZC1tbjFHallENnhxVGNYNEFR?oc=5" target="_blank" rel="noopener">木材塗料市場の未来：業界概要、成長見通し、および2026年から2033年にかけての予想 - pando.life</a>
-      
-    </article>
-    <article class="card highlight">
-      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">11時間前</span></div>
+      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">12時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMiYEFVX3lxTE42YUlvLUl3d05jakpyajVaTE8yNURfdG9WWVZfWTAyTmNUN044YTc2V0NORjJkbHNkMXhsbjVYU29PMW5kOVRBempySmhlRi13bFo3ckdzVlRHVmQwXzN5eQ?oc=5" target="_blank" rel="noopener">県と建設業界の若手・女性グループ名称決まる 人手不足解消へ - 愛媛新聞</a>
       
     </article>
     <article class="card highlight">
-      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">16時間前</span></div>
+      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">17時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE9NV2MzZWwzeUMxU2pCYnBjcVVnblUzaUdmWlBuekVpVkl2UHkxN3ozNXJnSzZnQ0ltTHNhYXVmZjNSbWk5aExPWVR5MXNtWDFPLW80XzdVeFNMakQxeGJJ?oc=5" target="_blank" rel="noopener">RIZAPが建設業界に突然の参入「中間マージン排除し、専門の企業と繋がっていく」資材調達から施工まで一括で手がける - TBS NEWS DIG</a>
       
     </article>
@@ -198,6 +218,11 @@
     <article class="card highlight">
       <div class="meta-line"><span class="source">Google News 断熱</span><span class="when">20時間前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMiZkFVX3lxTFBQVjgxVUFrZE9EYjZ5ejc5LVNra1lZaVRCQUg0V3hhb0puSWVlVzY2M3FCU09EUDc5TzVxRWkxMU5JTUpJdDBsRjVvNTU5c1cwRVVXQ1lOTENIYzM1aGVGUURvTmJWZw?oc=5" target="_blank" rel="noopener">断熱改修後の社長宅公開、改修前の部分と比較可能に【住宅リフォーム売上ランキング2026】 - reform-online.jp</a>
+      
+    </article>
+    <article class="card highlight">
+      <div class="meta-line"><span class="source">Google News 建設業界</span><span class="when">昨日 20:00</span></div>
+      <a class="title" href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTFAyMU9HZzVkbzVfc1ZrMjBGcnRDLTFCa0g5cklhTTdUekFTMGZfbjFoWWpZekNOb2dmTW1ZVVhGSlF1Ml9mejRhbkUtT2lmLUVvOS11Nmo0X3B0YmRwUjQycHdkakczaEU?oc=5" target="_blank" rel="noopener">建設業界に広がる手形払い停止、奥村組はソーシャルボンド発行で資金調達 - 日経クロステック</a>
       
     </article>
     <article class="card highlight">
@@ -216,7 +241,7 @@
       
     </article></div>
   </section>
-  <section class="category">
+  <section class="category" data-translate>
     <h2 class="cat-title">
       <span class="cat-name">海外の断熱・建材（日本語訳）</span>
       <span class="cat-count">10</span>
@@ -226,11 +251,6 @@
       <div class="meta-line"><span class="source">GreenBuildingAdvisor</span><span class="when">13時間前</span></div>
       <a class="title" href="https://www.greenbuildingadvisor.com/article/passive-house-accelerator-the-handoff-as-part-of-the-design" target="_blank" rel="noopener">Passive House Accelerator: The Handoff as Part of the Design</a>
       <p class="summary">What we hand over on day one, what we learn a year later, and how both change the next project</p>
-    </article>
-    <article class="card highlight">
-      <div class="meta-line"><span class="source">Google News 海外・断熱</span><span class="when">昨日 05:31</span></div>
-      <a class="title" href="https://news.google.com/rss/articles/CBMi0AFBVV95cUxQZXkxb0FwazYzLXZkaWRiM0pyQnJQQjZGLXJqZXNJQU5mOElVZzBqNlc3MS1KbUxXSlVlTWkzUEpPWEdqM2phaDUyZGVmOUdRSXg0Wk1CQ1h2VnJhZFNyaVZaWV9IeEpsQl9ydEJRV25zNTEybHFOQm1SeWxLRzlJZW9GZXUtWTVRWklQa2ltWURCdXVtUXhvRngtdHdnTk5ZakxPZklwOS04RFppaXNGbE9KTWt5UmJUdEl4UUZPa1BUTFJjTGhyZTVRMlVXZy14?oc=5" target="_blank" rel="noopener">Subsea Thermal Insulation Materials Market Forecast to 2035: Deepwater Flow Assurance Demand Drives Growth - IndexBox</a>
-      
     </article>
     <article class="card highlight">
       <div class="meta-line"><span class="source">GreenBuildingAdvisor</span><span class="when">2日前</span></div>
@@ -243,17 +263,12 @@
       
     </article>
     <article class="card highlight">
-      <div class="meta-line"><span class="source">Google News 海外・断熱</span><span class="when">2日前</span></div>
-      <a class="title" href="https://news.google.com/rss/articles/CBMiwwFBVV95cUxQT2lRSHNYaVZHVENtOEE2Z3NTQi1UVUZBM0NZZ0lMMklMNmpkU1Awemx0T2NUMFFDTVFKeEJjaVVPdEU2MWI4UEk3WmZNbXZaSDAwRmp1WmhjdFBnTUtwRkNUazk5RkFucGVwWHVFd3JKcWVmbjlFTDZQRmczTkVwLTFZWGdzd3lYLTJYSVE1QU1RS0d0X0F2ZUQ5RXBlS3lXdy1Tdk1RVXk1b2tCV1ZleUUyTFRwWXJURWd0WW05UmV1Yk0?oc=5" target="_blank" rel="noopener">Lithium Battery Thermal Insulation Market Forecast to 2035: Grid Storage to Drive 18-22% CAGR - News and Statistics - IndexBox</a>
-      
-    </article>
-    <article class="card highlight">
       <div class="meta-line"><span class="source">Google News 海外・断熱</span><span class="when">4日前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMi7gFBVV95cUxOS2JMaDJWZHhtTTRnVFZQVXRNc2ktbE5fLThrc0JrV0c2VmZXS050dkJycldNeE00bi1HMWoxbmRBUzU2c1FWY0tZWHZMSllrZnlHZzlfNzFpZWVWdmxrX2hQV3VnVms5ZWh2dXNXQjNyOEg0T1VPMkFyWndQMnlnS0ZwX3BVajdsYkFTYVQ5c29ZdkZWbkhneTJycmVtRmZNRlRFcXRSQVFpbTZYQmduZWNsZHpOdTgtaXRIODBBUUh6ZG1lcUN0Um5aTUdqWXczQkxiaXJpcE9VOG5XN3dLMzFScU9TTXozN2xUN1Zn?oc=5" target="_blank" rel="noopener">Wythe Windows Supports the Requity Foundation to Transform Condemned West Baltimore Rowhouse into Passive House - PRWeb</a>
       
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">GreenBuildingAdvisor</span><span class="when">5時間前</span></div>
+      <div class="meta-line"><span class="source">GreenBuildingAdvisor</span><span class="when">6時間前</span></div>
       <a class="title" href="https://www.greenbuildingadvisor.com/question/zone-4a-knee-wall-assembly-question" target="_blank" rel="noopener">Zone 4A knee wall assembly question</a>
       <p class="summary">Assuming that my knee wall is very well air-sealed, will the following assembly still risk condensation in the heating season:  2x4 wood-framed knee wall, exterior sheathing is just foil-faced (both…</p>
     </article>
@@ -271,6 +286,16 @@
       <div class="meta-line"><span class="source">Google News 海外・建材</span><span class="when">2日前</span></div>
       <a class="title" href="https://news.google.com/rss/articles/CBMilwFBVV95cUxPNWRSY2ZLRnM0cGwxb2ZEOUdUSmFnNkFoSlVad0t2c2cyMjNMT3JhajkwMkdXcE5XbTVXZW5FLVRKRXZDc00wWDlfUnc0dU83aFJCVGVaMUdWQlAtZVJKSUNXaGlxMm5Hbk1weDdJMzV5ZW1wYnZyQ0RZM1N4QjFSN015SDlqOTYyby02NTdTNzY2Z0tZX2Zj?oc=5" target="_blank" rel="noopener">12 startups scaling innovation to unlock low-carbon and circular systems - The World Economic Forum</a>
       
+    </article>
+    <article class="card">
+      <div class="meta-line"><span class="source">Google News 海外・建材</span><span class="when">2日前</span></div>
+      <a class="title" href="https://news.google.com/rss/articles/CBMilgFBVV95cUxQVVJwYjA0WjAyN0xqb0djSzN0c0VmVEtFN1BzN3U4NHV3ak1iVV9UQ0tLaDd5cWlHSm1YQmp5eENudU0zTzZTWmRCOU00ems0MnUzNER4U3ljYXROQWJfbnctUXEwOFRET1d3elctQWlhWU5JTVlKTVZhZWF0cm52V1JwOEV2SDdDekh4NnZtLXR0VzYzUlE?oc=5" target="_blank" rel="noopener">It’s Time to Give Natural Construction Materials Their Due - Multi-Housing News</a>
+      
+    </article>
+    <article class="card">
+      <div class="meta-line"><span class="source">Google News 海外・断熱</span><span class="when">2日前</span></div>
+      <a class="title" href="https://news.google.com/rss/articles/CBMiZEFVX3lxTFBObWpCYXJ5WTFmUmtsMEdCZGFaVTZBM1J3SkxPX0pXcWN2X25wNTNXNmJvS3BZR0lpQS11TVpNMkwyZHoxTWtNdXROdFZzUHVWc21hWVJEbHRNSS1kcVJWYnlEcVU?oc=5" target="_blank" rel="noopener">Don Edward Page Obituary Sep 23, 2026 - johnsonfuneralhome.net</a>
+      
     </article></div>
   </section>
   <section class="category">
@@ -280,7 +305,7 @@
     </h2>
     <div class="cards">
     <article class="card highlight">
-      <div class="meta-line"><span class="source">ITmedia AI+</span><span class="when">18時間前</span></div>
+      <div class="meta-line"><span class="source">ITmedia AI+</span><span class="when">19時間前</span></div>
       <a class="title" href="https://www.itmedia.co.jp/aiplus/article/2609/25/2000001742/" target="_blank" rel="noopener">「現代AIの父」シュミットフーバー氏がSakana AIに参画　RSI研究のアドバイザーに</a>
       <p class="summary">Sakana AIが「現代AIの父」と称されるユルゲン・シュミットフーバー氏の参画を発表。ChatGPTの「P」「T」の原型を1991年に発表したと主張する同氏は、再帰的自己改善（RSI）を研究する新設組織のアドバイザーを務める。</p>
     </article>
@@ -337,7 +362,7 @@
     </h2>
     <div class="cards">
     <article class="card">
-      <div class="meta-line"><span class="source">Qiita</span><span class="when">9時間前</span></div>
+      <div class="meta-line"><span class="source">Qiita</span><span class="when">10時間前</span></div>
       <a class="title" href="https://qiita.com/jqit-yukiono/items/8675266928f574677d9e?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener">JenkinsのPRレビューでテストとセキュリティスキャンも回す ― AIのAPPROVEを機械的に覆すMineWatchのCI</a>
       
     </article>
@@ -352,7 +377,7 @@ https://x.com/CompleteSkeptic/status/2099925687465570372
 「BERTでよい」論などあると</p>
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">Zenn</span><span class="when">16時間前</span></div>
+      <div class="meta-line"><span class="source">Zenn</span><span class="when">17時間前</span></div>
       <a class="title" href="https://zenn.dev/sun_asterisk/articles/free-event-not-free" target="_blank" rel="noopener">無料の技術イベントは、無料でつくられていない</a>
       <p class="summary">執筆背景
 今回の執筆のきっかけは、技術イベントにおいて無料の飲食だけを目的に参加する人がいるとSNS上で話題になっていたことに始まります。
@@ -425,44 +450,12 @@ Vue.jsを使っていますが、コアのロジックはTypeScriptで実装し�
   </section>
   <section class="category">
     <h2 class="cat-title">
-      <span class="cat-name">知的生産・Obsidian</span>
-      <span class="cat-count">5</span>
-    </h2>
-    <div class="cards">
-    <article class="card">
-      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">7時間前</span></div>
-      <a class="title" href="https://www.lifehacker.jp/article/2609-amazon-mr-vesa16/" target="_blank" rel="noopener">デスクが狭いなら、モニター裏へ。周辺機器の「置き場所」を増やしてみた</a>
-      <p class="summary">サンワサプライ「MR-VESA16」は、モニター裏のVESAネジ穴を活用して、外付けHDDや小型PC、Nintendo Switchなどをすっきり収納できるホルダー。VESA75/100/200に対応し、モニターアームとの共締めも可能です。総耐荷重2kgの丈夫なスチール製で、組み立てもドライバー1本でお手軽です。</p>
-    </article>
-    <article class="card">
-      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">8時間前</span></div>
-      <a class="title" href="https://www.lifehacker.jp/article/2609-daiso-disaster-prevention-goods-10/" target="_blank" rel="noopener">全部そろえても2,000円弱。ダイソーで買える防災グッズ10選</a>
-      
-    </article>
-    <article class="card">
-      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">8時間前</span></div>
-      <a class="title" href="https://www.lifehacker.jp/article/2609-lht-jackery-slimpower-h1/" target="_blank" rel="noopener">迫る雷雲、思わずコンセントを抜いた。でも、仕事は0.01秒も止まらなかった</a>
-      <p class="summary">Jackeryの「Jackery ポータブル電源 SlimPower H1」は、「守りたい一台のための専用機」として、冷蔵庫など家電の電源維持に特化した薄型モデルです。今回は、仕事デスクの下に導入し、PCのUPS（無停電電源装置）として使ってみました。</p>
-    </article>
-    <article class="card">
-      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">8時間前</span></div>
-      <a class="title" href="https://www.lifehacker.jp/article/2609-costorypo-angelwings-review1-1739226929/" target="_blank" rel="noopener">着脱1秒。チタン製のスマホストラップで手ぶらが加速しそう</a>
-      <p class="summary">一般的なフック式とは違う、マグネット内蔵リングで瞬時に着脱できる次世代スマホショルダーストラップをレビュー。耐荷重15kgの強力磁石で落下の心配なし。素材はチタンとアルミニウムから選べます。小物を吊るせる拡張ループ付きで、キャッシュレス時代の身軽なお出かけに最適です。</p>
-    </article>
-    <article class="card">
-      <div class="meta-line"><span class="source">ライフハッカー</span><span class="when">8時間前</span></div>
-      <a class="title" href="https://www.lifehacker.jp/article/2609-grok-2-image-generator-photoshop-features/" target="_blank" rel="noopener">画像の一部だけをプロンプトで修正可能に。Grok Image 2.0の新しいレイヤー機能を使ってみた</a>
-      <p class="summary">AI画像生成で一部だけを修正したいのに、全体がおかしくなってしまう。そんな悩みを解決するのが、xAIの「Imagine Image 2.0」です。Grokが画像を要素ごとに分割し、指定した部分だけをピンポイントで編集可能に。Photoshopライクな新機能の使い勝手と限界をレビューします。</p>
-    </article></div>
-  </section>
-  <section class="category">
-    <h2 class="cat-title">
       <span class="cat-name">相棒AIカルチャー</span>
       <span class="cat-count">5</span>
     </h2>
     <div class="cards">
     <article class="card highlight">
-      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">10時間前</span></div>
+      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">11時間前</span></div>
       <a class="title" href="https://gigazine.net/news/20260925-starcraft-brood-war-bench/" target="_blank" rel="noopener">AIに「StarCraft」をリアルタイムで戦わせる「Brood War Bench」が登場、全モデルが初心者レベルながらCodex Astraは18戦全勝</a>
       <p class="summary">AIエージェントにリアルタイムストラテジーゲーム「StarCraft: Brood War」を操作させて対戦能力を比較するベンチマーク「Brood War Bench」をソフトウェアエンジニアのベン・スワードロウ氏が公開しました。OpenAI系やAnthropicのClaude、xAIのGrokなどを含む19種類の構成が総当たりで対戦した結果、最上位のCodex Astraは18戦全勝を記録した一</p>
     </article>
@@ -482,15 +475,86 @@ Vue.jsを使っていますが、コアのロジックはTypeScriptで実装し�
       <p class="summary">1990年に発売された2Dアドベンチャーゲーム『モンキー・アイランド』に登場する架空の飲み物「グロッグ」は、金属製のジョッキをわずか数十秒で溶かしてしまうという設定があります。オランダ・フローニンゲン大学の科学者であるパトリツィオ・ラッファ氏が現実の化学に基づいて、このグロッグが実在できるのかどうかを検証しています。続きを読む...</p>
     </article>
     <article class="card">
-      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">10時間前</span></div>
+      <div class="meta-line"><span class="source">GIGAZINE</span><span class="when">11時間前</span></div>
       <a class="title" href="https://gigazine.net/news/20260925-qualcomm-snapdragon-x2-linux/" target="_blank" rel="noopener">Snapdragon X2シリーズでLinuxを公式サポートすることをQualcommが発表</a>
       <p class="summary">Qualcommが「Snapdragon Summit 2026」において、Snapdragon X2シリーズでLinuxを公式サポートすることを発表しました。続きを読む...</p>
     </article></div>
   </section>
 
+  <div id="reader" hidden>
+    <div class="reader-bar"><button type="button" class="reader-back">← 戻る</button></div>
+    <div class="reader-source"></div>
+    <h1 class="reader-title"></h1>
+    <div class="reader-body"></div>
+    <div class="reader-foot">
+      <a class="reader-orig" target="_blank" rel="noopener">元の記事を開く</a>
+      <button type="button" class="reader-back">← 戻る</button>
+    </div>
+  </div>
+
   <script>
+    // 見出しを押したら、記事本文をこの朝刊の中に同じ大きさの文字で表示する
+    const READER_URL = "https://morning-news-cron.hisasi-t.workers.dev/read";
+    const reader = document.getElementById('reader');
+    let savedScroll = 0;
+    // 戻ったときの位置はこちらで戻す（ブラウザ任せだと先頭に飛ぶ）
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+    function showReader(link, title, source, translate) {
+      savedScroll = window.scrollY;
+      reader.querySelector('.reader-source').textContent = source;
+      reader.querySelector('.reader-title').textContent = title;
+      reader.querySelector('.reader-orig').href = link;
+      const body = reader.querySelector('.reader-body');
+      body.innerHTML = '<p class="reader-msg">' + (translate
+        ? '英語の記事を日本語に訳しています。10秒ほどお待ちください…'
+        : '本文を読み込み中…') + '</p>';
+      document.body.classList.add('reading');
+      reader.hidden = false;
+      window.scrollTo(0, 0);
+      fetch(READER_URL + '?u=' + encodeURIComponent(link))
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(d => {
+          if (!d.paragraphs || !d.paragraphs.length) throw 'empty';
+          body.innerHTML = '';
+          for (const p of d.paragraphs) {
+            const el = document.createElement('p');
+            el.textContent = p;
+            body.appendChild(el);
+          }
+          if (d.translated) {
+            const n = document.createElement('p');
+            n.className = 'reader-msg';
+            n.textContent = '（英語の記事を自動で日本語に訳しています）';
+            body.prepend(n);
+          }
+        })
+        .catch(() => {
+          body.innerHTML = '<p class="reader-msg">このサイトは本文を取り出せませんでした。下の「元の記事を開く」で読んでください。</p>';
+        });
+    }
+
+    function hideReader() {
+      reader.hidden = true;
+      document.body.classList.remove('reading');
+      window.scrollTo(0, savedScroll);
+      setTimeout(() => window.scrollTo(0, savedScroll), 50);
+    }
+
+    document.querySelectorAll('a.title').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const card = a.closest('.card');
+        showReader(a.href, a.textContent, card.querySelector('.source').textContent,
+                   a.closest('.category').hasAttribute('data-translate'));
+        history.pushState({ reader: true }, '');
+      });
+    });
+    reader.querySelectorAll('.reader-back').forEach(b => b.addEventListener('click', () => history.back()));
+    window.addEventListener('popstate', () => { if (!reader.hidden) hideReader(); });
+
     // この朝刊が生成された時刻（UNIXタイムスタンプ）
-    const BUILD_TS = 1790371865;
+    const BUILD_TS = 1790373588;
 
     // version.json を毎回fetchし、サーバー側が新しければ確実に再読込する
     // （HTMLはPWAで強くキャッシュされるが、別ファイル＋no-store＋クエリ付きなら最新が取れる）
