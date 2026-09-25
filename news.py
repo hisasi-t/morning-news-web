@@ -7,19 +7,29 @@ import sys
 import time
 import json
 import datetime
+import urllib.request
 import html as html_module
 
 import feedparser
 
 from feeds import FEEDS, MAX_ITEMS_PER_FEED, MAX_ITEMS_PER_CATEGORY
-from keywords import KEYWORDS
+from keywords import KEYWORDS, EXCLUDE_KEYWORDS
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "index.html")
+LINKS_FILE = os.path.join(OUTPUT_DIR, "links.json")
+
+# 見出しを押したときに本文を取ってくる Worker（morning-news-cron の /read）
+READER_URL = "https://morning-news-cron.hisasi-t.workers.dev/read"
+TRANSLATE_URL = "https://morning-news-cron.hisasi-t.workers.dev/translate"
 
 KEYWORDS_LOWER = {
     cat: [kw.lower() for kw in kws]
     for cat, kws in KEYWORDS.items()
+}
+EXCLUDE_LOWER = {
+    cat: [kw.lower() for kw in kws]
+    for cat, kws in EXCLUDE_KEYWORDS.items()
 }
 
 
@@ -28,17 +38,30 @@ def matching_categories(text: str) -> list:
     return [cat for cat, kws in KEYWORDS_LOWER.items() if any(kw in t for kw in kws)]
 
 
-def translate_ja(text: str) -> str:
-    """英語テキストを日本語へ翻訳（失敗したら原文のまま返す）"""
-    if not text or not text.strip():
-        return text
+def is_excluded(cat: str, title: str) -> bool:
+    t = title.lower()
+    return any(kw in t for kw in EXCLUDE_LOWER.get(cat, []))
+
+
+def translate_ja(texts: list) -> list:
+    """英文をまとめて日本語へ訳す（Worker の Cloudflare AI 翻訳。失敗したら原文のまま返す）。
+    Googleの無料翻訳はGitHub Actionsからだと自動アクセス扱いで断られるため使わない"""
+    key = os.environ.get("TRANSLATE_KEY")
+    if not key:
+        print("[translate SKIP] TRANSLATE_KEY 未設定", file=sys.stderr)
+        return texts
+    req = urllib.request.Request(
+        TRANSLATE_URL,
+        data=json.dumps({"texts": texts}).encode("utf-8"),
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"},
+    )
     try:
-        from deep_translator import GoogleTranslator
-        result = GoogleTranslator(source="auto", target="ja").translate(text[:1500])
-        return result if result else text
+        with urllib.request.urlopen(req, timeout=120) as res:
+            out = json.load(res)["texts"]
+        return [o or t for o, t in zip(out, texts)]
     except Exception as e:
         print(f"[translate SKIP] {e}", file=sys.stderr)
-        return text
+        return texts
 
 
 def fetch_articles() -> dict:
@@ -54,8 +77,11 @@ def fetch_articles() -> dict:
                 continue
 
             for entry in entries:
-                title = getattr(entry, "title", "(タイトルなし)")
+                title = html_module.unescape(getattr(entry, "title", "(タイトルなし)"))
                 link  = getattr(entry, "link",  "#")
+                if is_excluded(primary_cat, title):
+                    print(f"  除外: {title[:50]}", flush=True)
+                    continue
                 summary_raw = getattr(entry, "summary",
                               getattr(entry, "description", ""))
                 summary = re.sub(r"<[^>]+>", "", summary_raw)
@@ -106,10 +132,11 @@ def fetch_articles() -> dict:
     for cat, cat_info in FEEDS.items():
         if not cat_info.get("translate"):
             continue
-        for a in result[cat]:
-            print(f"  翻訳中: {a['title'][:50]}...", flush=True)
-            a["title"]   = translate_ja(a["title"])
-            a["summary"] = translate_ja(a["summary"])
+        arts = result[cat]
+        print(f"  翻訳中: {cat_info['name']} {len(arts)}件", flush=True)
+        done = translate_ja([a["title"] for a in arts] + [a["summary"] for a in arts])
+        for i, a in enumerate(arts):
+            a["title"], a["summary"] = done[i], done[len(arts) + i]
 
     return result
 
@@ -164,9 +191,10 @@ def section_html(cat_id: str, articles: list) -> str:
         body = '<p class="empty">今日は新着なし</p>'
     else:
         body = '<div class="cards">' + "".join(card_html(a) for a in articles) + '</div>'
+    attr = " data-translate" if info.get("translate") else ""
 
     return f"""
-  <section class="category">
+  <section class="category"{attr}>
     <h2 class="cat-title">
       <span class="cat-name">{name}</span>
       <span class="cat-count">{count}</span>
@@ -248,16 +276,6 @@ def build_html(articles_by_cat: dict) -> str:
       font-family: inherit;
     }}
     #refresh-btn:active {{ opacity: 0.7; }}
-    header .tip {{
-      font-size: 0.8rem;
-      color: #999;
-      margin-top: 8px;
-      padding: 6px 10px;
-      background: #f7f7f7;
-      border-radius: 4px;
-      line-height: 1.5;
-    }}
-    header .tip b {{ color: #1a1a1a; }}
     .category {{ margin-bottom: 36px; }}
     .cat-title {{
       font-size: 1.2rem;
@@ -320,6 +338,42 @@ def build_html(articles_by_cat: dict) -> str:
     }}
     .empty {{ color: #aaa; font-size: 1rem; padding: 4px 0; }}
 
+    /* 記事を読む画面（一覧と同じ rem 基準なので、一覧と同じ大きさで読める） */
+    body.reading > header, body.reading > .category {{ display: none; }}
+    #reader {{ max-width: 760px; margin: 0 auto; }}
+    .reader-bar {{ margin-bottom: 18px; }}
+    .reader-back {{
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      font-size: 1rem;
+      border-radius: 4px;
+      font-family: inherit;
+      cursor: pointer;
+    }}
+    .reader-source {{ font-size: 0.85rem; color: #888; margin-bottom: 6px; }}
+    .reader-title {{
+      font-size: 1.35rem;
+      font-weight: 600;
+      line-height: 1.5;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid #1a1a1a;
+    }}
+    .reader-body p {{ font-size: 1.1rem; line-height: 1.9; margin-bottom: 1.1em; }}
+    .reader-body p.reader-msg {{ font-size: 0.95rem; color: #888; }}
+    .reader-foot {{
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid #d0d0d0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }}
+    .reader-orig {{ font-size: 1rem; color: #1a1a1a; }}
+
     /* タブレット以上: コンテンツ幅制限 */
     @media (min-width: 640px) {{
       body {{ max-width: 760px; margin: 0 auto; padding: 36px 28px; }}
@@ -346,11 +400,81 @@ def build_html(articles_by_cat: dict) -> str:
       <span>{date_str} {time_str} 配信 / 計{total}件</span>
       <button id="refresh-btn" type="button">更新</button>
     </div>
-    <div class="tip">読みづらいリンク先は、Safariの「<b>あA</b>」→「<b>Webサイトを表示</b>」または「<b>リーダーを表示</b>」で整います</div>
   </header>
   {sections}
 
+  <div id="reader" hidden>
+    <div class="reader-bar"><button type="button" class="reader-back">← 戻る</button></div>
+    <div class="reader-source"></div>
+    <h1 class="reader-title"></h1>
+    <div class="reader-body"></div>
+    <div class="reader-foot">
+      <a class="reader-orig" target="_blank" rel="noopener">元の記事を開く</a>
+      <button type="button" class="reader-back">← 戻る</button>
+    </div>
+  </div>
+
   <script>
+    // 見出しを押したら、記事本文をこの朝刊の中に同じ大きさの文字で表示する
+    const READER_URL = {json.dumps(READER_URL)};
+    const reader = document.getElementById('reader');
+    let savedScroll = 0;
+    // 戻ったときの位置はこちらで戻す（ブラウザ任せだと先頭に飛ぶ）
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+    function showReader(link, title, source, translate) {{
+      savedScroll = window.scrollY;
+      reader.querySelector('.reader-source').textContent = source;
+      reader.querySelector('.reader-title').textContent = title;
+      reader.querySelector('.reader-orig').href = link;
+      const body = reader.querySelector('.reader-body');
+      body.innerHTML = '<p class="reader-msg">' + (translate
+        ? '英語の記事を日本語に訳しています。10秒ほどお待ちください…'
+        : '本文を読み込み中…') + '</p>';
+      document.body.classList.add('reading');
+      reader.hidden = false;
+      window.scrollTo(0, 0);
+      fetch(READER_URL + '?u=' + encodeURIComponent(link))
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(d => {{
+          if (!d.paragraphs || !d.paragraphs.length) throw 'empty';
+          body.innerHTML = '';
+          for (const p of d.paragraphs) {{
+            const el = document.createElement('p');
+            el.textContent = p;
+            body.appendChild(el);
+          }}
+          if (d.translated) {{
+            const n = document.createElement('p');
+            n.className = 'reader-msg';
+            n.textContent = '（英語の記事を自動で日本語に訳しています）';
+            body.prepend(n);
+          }}
+        }})
+        .catch(() => {{
+          body.innerHTML = '<p class="reader-msg">このサイトは本文を取り出せませんでした。下の「元の記事を開く」で読んでください。</p>';
+        }});
+    }}
+
+    function hideReader() {{
+      reader.hidden = true;
+      document.body.classList.remove('reading');
+      window.scrollTo(0, savedScroll);
+      setTimeout(() => window.scrollTo(0, savedScroll), 50);
+    }}
+
+    document.querySelectorAll('a.title').forEach(a => {{
+      a.addEventListener('click', e => {{
+        e.preventDefault();
+        const card = a.closest('.card');
+        showReader(a.href, a.textContent, card.querySelector('.source').textContent,
+                   a.closest('.category').hasAttribute('data-translate'));
+        history.pushState({{ reader: true }}, '');
+      }});
+    }});
+    reader.querySelectorAll('.reader-back').forEach(b => b.addEventListener('click', () => history.back()));
+    window.addEventListener('popstate', () => {{ if (!reader.hidden) hideReader(); }});
+
     // この朝刊が生成された時刻（UNIXタイムスタンプ）
     const BUILD_TS = {build_ts};
 
@@ -405,6 +529,11 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"\nHTML生成完了: {OUTPUT_FILE}")
+
+    # 本文取り出しWorkerは、ここに載っているURLしか読みに行かない
+    links = [a["link"] for arts in articles_by_cat.values() for a in arts]
+    with open(LINKS_FILE, "w", encoding="utf-8") as f:
+        json.dump(links, f, ensure_ascii=False)
 
     # PWAキャッシュ突破用：JS側から fetch して最新かどうかを判定する小さなファイル
     JST = datetime.timezone(datetime.timedelta(hours=9))

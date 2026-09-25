@@ -15,11 +15,6 @@ KEYWORDS = {
         "Raspberry Pi", "Arduino", "ローカルLLM", "Ollama",
         "Roland", "ステカ", "カッティング",
     ],
-    "D": [
-        "Obsidian", "ノート術", "Zettelkasten", "PKM",
-        "知的生産", "ライフログ", "デジタルガーデン",
-        "Notion", "セカンドブレイン",
-    ],
     "F": [
         "insulation", "thermal", "airtight", "passive house",
         "retrofit", "energy efficiency", "heat pump", "R-value", "U-value",
@@ -30,5 +25,22 @@ KEYWORDS = {
         "ナイトライダー", "KITT", "アイアンマン", "ジャービス",
         "AIエージェント", "音声アシスタント", "スマートホーム",
         "ロボット", "自動化", "エージェント",
+    ],
+}
+
+# タイトルにこの言葉が入っている記事はそのカテゴリに載せない（大文字小文字は区別しない）
+EXCLUDE_KEYWORDS = {
+    "A": [
+        # 「断熱」で拾ってしまう服・日用品
+        "ファッション", "SPUR", "コーデ", "ワークマン", "作業服", "断熱服",
+        "着る断熱", "ウェア", "アウター", "ジャケット",
+        "水筒", "ボトル", "タンブラー", "魔法瓶", "クーラーボックス", "寝袋",
+        # 中身の無い市場調査の宣伝
+        "世界市場", "市場予測", "市場規模", "市場の未来", "成長見通し", "市場調査",
+    ],
+    "F": [
+        "Market Forecast", "Market Size", "Market Report", "Market Share",
+        "Market Growth", "Market Analysis", "IndexBox", "openPR",
+        "Subsea", "Battery", "Lithium",
     ],
 }

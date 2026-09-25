@@ -31,12 +31,6 @@ FEEDS = {
             "Qiita": "https://qiita.com/popular-items/feed",
         },
     },
-    "D": {
-        "name": "知的生産・Obsidian",
-        "sources": {
-            "ライフハッカー": "https://www.lifehacker.jp/feed/index.xml",
-        },
-    },
     "E": {
         "name": "相棒AIカルチャー",
         "sources": {
