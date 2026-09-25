@@ -53,7 +53,9 @@ def translate_ja(texts: list) -> list:
     req = urllib.request.Request(
         TRANSLATE_URL,
         data=json.dumps({"texts": texts}).encode("utf-8"),
-        headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"},
+        # Python標準のUser-AgentはCloudflareに弾かれる（error 1010）ので名乗りを付ける
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}",
+                 "User-Agent": "morning-news-web"},
     )
     try:
         with urllib.request.urlopen(req, timeout=120) as res:
